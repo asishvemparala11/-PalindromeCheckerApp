@@ -1,49 +1,33 @@
 import java.util.*;
 
-public class PalindromeCheckerApp {
-    public static void main(String[] args) {
+        public class PalindromeCheckerApp {
 
-                System.out.println("=================================");
-                System.out.println("  Palindrome Checker Application ");
-                System.out.println("  Version : 1.0 (UC7 - Deque)     ");
-                System.out.println("=================================");
+            // Normalize string: remove spaces and convert to lowercase
+            public static String normalize(String str) {
+                // Remove all non-alphanumeric characters if needed
+                str = str.replaceAll("\\s+", ""); // remove spaces
+                return str.toLowerCase();
+            }
 
-                Scanner sc = new Scanner(System.in);
-                System.out.print("Enter a string to check palindrome: ");
-                String input = sc.nextLine();
+            // Check palindrome using two-pointer technique
+            public static boolean isPalindrome(String str) {
+                str = normalize(str);
+                int start = 0, end = str.length() - 1;
 
-                // Convert to lowercase to make comparison case-insensitive
-                input = input.toLowerCase();
-
-                // Create Deque
-                Deque<Character> deque = new ArrayDeque<>();
-
-                // Insert characters into deque
-                for (char ch : input.toCharArray()) {
-                    deque.addLast(ch);
-                }
-
-                boolean isPalindrome = true;
-
-                // Compare front and rear elements
-                while (deque.size() > 1) {
-                    char front = deque.removeFirst();
-                    char rear = deque.removeLast();
-
-                    if (front != rear) {
-                        isPalindrome = false;
-                        break;
+                while (start < end) {
+                    if (str.charAt(start) != str.charAt(end)) {
+                        return false;
                     }
+                    start++;
+                    end--;
                 }
+                return true;
+            }
 
-                // Output result
-                if (isPalindrome) {
-                    System.out.println("Result: The given string IS a Palindrome ");
-                } else {
-                    System.out.println("Result: The given string is NOT a Palindrome ");
-                }
-
-                sc.close();
+            public static void main(String[] args) {
+                String input = "A man a plan a canal Panama";
+                boolean result = isPalindrome(input);
+                System.out.println("Is \"" + input + "\" a palindrome (ignoring case & spaces)? " + result);
             }
         }
 
